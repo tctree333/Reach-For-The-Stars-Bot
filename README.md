@@ -1,2 +1,2 @@
-# SciOly-ID-Discord-Bot
-A generic template for creating Discord bots for practicing ID SciOly events.
+# Reach For The Stars Bot
+A Discord bot for aspiring astronomers.
