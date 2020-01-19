@@ -133,6 +133,10 @@ async def get_files(item, retries=0):
 
 async def download_github():
     logger.info("cloning github")
-    shutil.rmtree("github_download/")
+    try:
+        logger.info("deleting existing images")
+        shutil.rmtree("github_download/")
+    except FileNotFoundError:
+        logger.info("doesn't exist, cloning")
     Repo.clone_from(config.GITHUB_IMAGE_REPO_URL, "github_download/")
     logger.info("done cloning")
