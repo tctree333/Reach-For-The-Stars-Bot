@@ -148,7 +148,7 @@ class Other(commands.Cog):
         embed.set_author(name=config.BOT_SIGNATURE)
         embed.add_field(
             name="Invite",
-            value=f"To invite this bot to your own server, use the following invite links.\n {config.INVITE}"
+            value=f"To invite this bot to your own server, use the following invite links.\n {config.INVITE}",
             inline=False
         )
         await ctx.send(embed=embed)
