@@ -166,23 +166,20 @@ def _generate_aliases():
     aliases = {}
     with open(f'data/dsos.txt', 'r') as f:
         for line in f:
-            item = line.strip().split(',')[0].lower()
-            try:
-                alias = line.strip().split(',')[1].lower()
-            except IndexError:
-                alias = item
-            aliases[item] = alias
-    logger.info("Done with wiki urls")
+            raw_aliases = list(line.strip().split(','))
+            item = raw_aliases[0].lower()
+            aliases[item] = raw_aliases
+    logger.info("Done with aliases")
     return aliases
 
 
-def get_alias(item):
+def get_aliases(item):
     item = item.lower()
     try:
-        alias = aliases[item]
+        alias_list = aliases[item]
     except KeyError:
-        alias = item
-    return alias
+        alias_list = [item]
+    return alias_list
 
 
 def get_item_type(item: str):

@@ -22,6 +22,7 @@ import pickle
 import random
 import string
 import time
+import math
 import urllib.parse
 from functools import partial
 from io import BytesIO
@@ -101,6 +102,13 @@ def owner_check(ctx) -> bool:
     owners = set(str(os.getenv("ids")).split(","))
     return str(ctx.author.id) in owners
 
+def spellcheck_list(word_to_check, correct_list, abs_cutoff=None):
+    for correct_word in correct_list:
+        if abs_cutoff is None:
+            relative_cutoff = math.floor(len(correct_word)/3)
+        if spellcheck(word_to_check, correct_word, relative_cutoff) is True:
+            return True
+    return False
 
 def spellcheck(worda, wordb, cutoff=3):
     """Checks if two words are close to each other.

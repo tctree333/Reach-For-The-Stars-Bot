@@ -17,8 +17,8 @@
 import discord
 from discord.ext import commands
 
-from data import database, get_wiki_url, logger, get_alias
-from functions import channel_setup, score_increment, spellcheck, user_setup
+from data import database, get_wiki_url, logger, get_aliases
+from functions import channel_setup, score_increment, spellcheck_list, user_setup
 
 
 class Check(commands.Cog):
@@ -41,7 +41,7 @@ class Check(commands.Cog):
             logger.info("currentItem: " + str(currentItem.lower().replace("-", " ")))
             logger.info("args: " + str(arg.lower().replace("-", " ")))
 
-            if spellcheck(arg, currentItem) is True or spellcheck(arg, get_alias(currentItem.lower())) is True:
+            if spellcheck_list(arg, get_aliases(currentItem.lower())) is True:
                 logger.info("correct")
 
                 database.hset(f"channel:{str(ctx.channel.id)}", "item", "")
