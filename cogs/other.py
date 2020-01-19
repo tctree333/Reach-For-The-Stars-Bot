@@ -116,7 +116,7 @@ class Other(commands.Cog):
         embed.add_field(
             name="Bot Info",
             value=f"This bot was created by {config.AUTHORS}" +
-            f"for helping people practice {config.ID_TYPE} identification for Science Olympiad.\n" +
+            f"for helping people practice {config.ID_TYPE} identification for Science Olympiad.\n",
             inline=False
         )
         embed.add_field(
