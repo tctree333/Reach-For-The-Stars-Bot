@@ -22,7 +22,6 @@ import shutil
 import sys
 import time
 
-import aiohttp
 import discord
 import redis
 import wikipedia
@@ -184,16 +183,16 @@ if __name__ == '__main__':
                         "**Error:** " + str(error.original))
                     await ctx.send("https://discord.gg/fXxYyDJ")
 
-            elif isinstance(error.original, aiohttp.ClientOSError):
-                if error.original.errno == errno.ECONNRESET:
-                    await ctx.send("**An error has occured with discord. :(**\n*Please try again.*")
-                else:
-                    capture_exception(error.original)
-                    await ctx.send(
-                        "**An unexpected ClientOSError has occurred.**\n" +
-                        "*Please log this message in #support in the support server below, or try again.*\n" +
-                        "**Error:** " + str(error.original))
-                    await ctx.send("https://discord.gg/fXxYyDJ")
+#            elif isinstance(error.original, aiohttp.ClientOSError):
+#                if error.original.errno == errno.ECONNRESET:
+#                    await ctx.send("**An error has occured with discord. :(**\n*Please try again.*")
+#                else:
+#                    capture_exception(error.original)
+#                    await ctx.send(
+#                        "**An unexpected ClientOSError has occurred.**\n" +
+#                        "*Please log this message in #support in the support server below, or try again.*\n" +
+#                        "**Error:** " + str(error.original))
+#                    await ctx.send("https://discord.gg/fXxYyDJ")
 
             else:
                 logger.info("uncaught command error")

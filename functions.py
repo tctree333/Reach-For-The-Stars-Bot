@@ -27,7 +27,6 @@ from functools import partial
 from io import BytesIO
 from mimetypes import guess_all_extensions, guess_extension
 
-import aiohttp
 import discord
 from PIL import Image
 
