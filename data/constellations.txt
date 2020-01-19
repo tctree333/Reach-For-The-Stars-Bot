@@ -1,0 +1,25 @@
+Andromeda
+Aquila
+Auriga
+Bootes
+Canis Major
+Canis Minor
+Centaurus
+Coma Berenices
+Corvus
+Crux
+Cygnus
+Dorado
+Gemini
+Lyra
+Ophiuchus
+Orion
+Perseus
+Sagittarius
+Sextans
+Scorpius
+Taurus
+Tucana
+Ursa Major
+Ursa Minor
+Virgo

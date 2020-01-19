@@ -1,0 +1,66 @@
+andromeda,https://en.wikipedia.org/wiki/Andromeda_Galaxy
+aquila,https://en.wikipedia.org/wiki/Aquila_(constellation)
+auriga,https://en.wikipedia.org/wiki/Auriga_(constellation)
+bootes,https://en.wikipedia.org/wiki/Bo%C3%B6tes
+canis major,https://en.wikipedia.org/wiki/Canis_Major
+canis minor,https://en.wikipedia.org/wiki/Canis_Minor
+centaurus,https://en.wikipedia.org/wiki/Centaurus
+coma berenices,https://en.wikipedia.org/wiki/Coma_Berenices
+corvus,https://en.wikipedia.org/wiki/Corvus
+crux,https://en.wikipedia.org/wiki/Crux
+cygnus,https://en.wikipedia.org/wiki/Swan
+dorado,https://en.wikipedia.org/wiki/Dorado
+gemini,https://en.wikipedia.org/wiki/Gemini_(constellation)
+lyra,https://en.wikipedia.org/wiki/Lyra
+ophiuchus,https://en.wikipedia.org/wiki/Ophiuchus
+orion,https://en.wikipedia.org/wiki/Orion_(constellation)
+perseus,https://en.wikipedia.org/wiki/Perseus_(constellation)
+sagittarius,https://en.wikipedia.org/wiki/Sagittarius_A*
+sextans,https://en.wikipedia.org/wiki/Sextans
+scorpius,https://en.wikipedia.org/wiki/Scorpius
+taurus,https://en.wikipedia.org/wiki/Taurus_(constellation)
+tucana,https://en.wikipedia.org/wiki/Tucana
+ursa major,https://en.wikipedia.org/wiki/Ursa_Major
+ursa minor,https://en.wikipedia.org/wiki/Ursa_Minor
+virgo,https://en.wikipedia.org/wiki/Virgo_(constellation)
+m31,https://en.wikipedia.org/wiki/Andromeda_Galaxy
+ngc5128,https://en.wikipedia.org/wiki/Centaurus_A
+ngc4676,https://en.wikipedia.org/wiki/Mice_Galaxies
+ngc4555,https://en.wikipedia.org/wiki/NGC_4555
+ngc4038,https://en.wikipedia.org/wiki/Antennae_Galaxies
+dragonfish nebula,https://en.wikipedia.org/wiki/Dragonfish_Nebula
+30 doradus,https://en.wikipedia.org/wiki/Tarantula_Nebula
+lmc,https://en.wikipedia.org/wiki/Large_Magellanic_Cloud
+rho ophiuchi cloud complex,https://en.wikipedia.org/wiki/Rho_Ophiuchi_cloud_complex
+m42,https://en.wikipedia.org/wiki/Orion_Nebula
+ngc1333,https://en.wikipedia.org/wiki/NGC_1333
+sgr a*,https://en.wikipedia.org/wiki/Sagittarius_A*
+m8,https://en.wikipedia.org/wiki/Lagoon_Nebula
+baby boom galaxy,https://en.wikipedia.org/wiki/Baby_Boom_Galaxy
+ngc6357,https://en.wikipedia.org/wiki/NGC_6357
+ngc6334,https://en.wikipedia.org/wiki/NGC_6334
+t tauri,https://en.wikipedia.org/wiki/T_Tauri_star
+smc,hhttps://en.wikipedia.org/wiki/Small_Magellanic_Cloud
+gn-z11,https://en.wikipedia.org/wiki/GN-z11
+m101,https://en.wikipedia.org/wiki/Pinwheel_Galaxy
+m60,https://en.wikipedia.org/wiki/Messier_60
+m104,https://en.wikipedia.org/wiki/Sombrero_Galaxy
+altair,https://en.wikipedia.org/wiki/Altair
+capella,https://en.wikipedia.org/wiki/Capella
+arcturus,https://en.wikipedia.org/wiki/Arcturus
+sirius,https://en.wikipedia.org/wiki/Sirius
+procyon,https://en.wikipedia.org/wiki/Procyon
+deneb,https://en.wikipedia.org/wiki/Deneb
+castor,https://en.wikipedia.org/wiki/Castor_(star)
+pollux,https://en.wikipedia.org/wiki/Pollux_(star)
+vega,https://en.wikipedia.org/wiki/Vega
+zeta ophiuchi,https://en.wikipedia.org/wiki/Zeta_Ophiuchi
+betelgeuse,https://en.wikipedia.org/wiki/Betelgeuse
+rigel,https://en.wikipedia.org/wiki/Rigel
+algol,https://en.wikipedia.org/wiki/Algol
+antares,https://en.wikipedia.org/wiki/Antares
+aldebaran,https://en.wikipedia.org/wiki/Aldebaran
+mizar,https://en.wikipedia.org/wiki/Mizar
+alcor,https://en.wikipedia.org/wiki/Alcor_(star)
+polaris,https://en.wikipedia.org/wiki/Polaris
+spica,https://en.wikipedia.org/wiki/Spica
