@@ -8,4 +8,4 @@ GITHUB_IMAGE_REPO_URL = "https://github.com/tctree333/Reach-For-The-Stars-Images
 
 INVITE = "This bot is currently not avaliable outside the support server."
 SUPPORT_SERVER = "https://discord.gg/Y2xwJSh"
-AUTHORS = "person_v1.32, with code from hmmm and EraserBird, and with help from Naddle and whaledemon."
+AUTHORS = "person_v1.32, with code from hmmm and EraserBird, and with help from Naddle and whaledemon"
