@@ -18,9 +18,9 @@ import typing
 
 import discord
 from discord.ext import commands
-from sentry_sdk import capture_exception
 
-from data.data import database, logger
+import config
+from data import database, logger
 from functions import channel_setup, user_setup
 
 
@@ -39,7 +39,7 @@ class Score(commands.Cog):
 
         totalCorrect = int(database.zscore("score:global", str(ctx.channel.id)))
         await ctx.send(
-            f"Wow, looks like a total of {str(totalCorrect)} birds have been answered correctly in this channel! " +
+            f"Wow, looks like a total of {str(totalCorrect)} {config.ID_TYPE} have been answered correctly in this channel! " +
             "Good job everyone!"
         )
 
@@ -79,7 +79,7 @@ class Score(commands.Cog):
                 return
 
         embed = discord.Embed(type="rich", colour=discord.Color.blurple())
-        embed.set_author(name="Bird ID - An Ornithology Bot")
+        embed.set_author(name=config.BOT_SIGNATURE)
         embed.add_field(name="User Score:", value=f"{user} has answered correctly {times} times.")
         await ctx.send(embed=embed)
 
@@ -95,7 +95,7 @@ class Score(commands.Cog):
         await user_setup(ctx)
 
         embed = discord.Embed(type="rich", colour=discord.Color.blurple(), title="**User Streaks**")
-        embed.set_author(name="Bird ID - An Ornithology Bot")
+        embed.set_author(name=config.BOT_SIGNATURE)
         current_streak = f"You have answered `{str(int(database.zscore('streak:global', str(ctx.author.id))))}` in a row!"
         max_streak = f"Your max was `{str(int(database.zscore('streak.max:global', str(ctx.author.id))))}` in a row!"
         embed.add_field(name=f"**Current Streak**", value=current_streak, inline=False)
@@ -165,7 +165,7 @@ class Score(commands.Cog):
 
         leaderboard_list = database.zrevrangebyscore(database_key, "+inf", "-inf", page, 10, True)
         embed = discord.Embed(type="rich", colour=discord.Color.blurple())
-        embed.set_author(name="Bird ID - An Ornithology Bot")
+        embed.set_author(name=config.BOT_SIGNATURE)
         leaderboard = ""
 
         for i, stats in enumerate(leaderboard_list):
@@ -205,80 +205,6 @@ class Score(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    # missed - returns top 1-10 missed birds
-    @commands.command(
-        brief="- Top incorrect birds",
-        help="- Top incorrect birds, scope is either global, server, or me. (g, s, m)",
-        aliases=["m"]
-    )
-    @commands.cooldown(1, 5.0, type=commands.BucketType.user)
-    async def missed(self, ctx, scope="", page=1):
-        logger.info("command: missed")
-
-        await channel_setup(ctx)
-        await user_setup(ctx)
-
-        try:
-            page = int(scope)
-        except ValueError:
-            if scope == "":
-                scope = "global"
-                scope = scope.lower()
-        else:
-            scope = "global"
-
-        logger.info(f"scope: {scope}")
-        logger.info(f"page: {page}")
-
-        if not scope in ("global", "server", "me", "g", "s", "m"):
-            logger.info("invalid scope")
-            await ctx.send(f"**{scope} is not a valid scope!**\n*Valid Scopes:* `global, server, me`")
-            return
-
-        if page < 1:
-            logger.info("invalid page")
-            await ctx.send("Not a valid number. Pick a positive integer!")
-            return
-
-        database_key = ""
-        if scope in ("server", "s"):
-            if ctx.guild is not None:
-                database_key = f"incorrect.server:{ctx.guild.id}"
-                scope = "server"
-            else:
-                logger.info("dm context")
-                await ctx.send("**Server scopes are not avaliable in DMs.**\n*Showing global leaderboard instead.*")
-                scope = "global"
-                database_key = "incorrect:global"
-        elif scope in ("me", "m"):
-            database_key = f"incorrect.user:{ctx.author.id}"
-            scope = "me"
-        else:
-            database_key = "incorrect:global"
-            scope = "global"
-
-        user_amount = int(database.zcard(database_key))
-        page = (page * 10) - 10
-
-        if user_amount == 0:
-            logger.info(f"no users in {database_key}")
-            await ctx.send("There are no birds in the database.")
-            return
-
-        if page > user_amount:
-            page = user_amount - (user_amount % 10)
-
-        leaderboard_list = database.zrevrangebyscore(database_key, "+inf", "-inf", page, 10, True)
-        embed = discord.Embed(type="rich", colour=discord.Color.blurple())
-        embed.set_author(name="Bird ID - An Ornithology Bot")
-        leaderboard = ""
-
-        for i, stats in enumerate(leaderboard_list):
-            leaderboard += f"{str(i+1+page)}. **{str(stats[0])[2:-1]}** - {str(int(stats[1]))}\n"
-        embed.add_field(
-            name=f"Top Missed Birds ({scope})", value=leaderboard, inline=False)
-
-        await ctx.send(embed=embed)
 
     # Command-specific error checking
     @leaderboard.error
@@ -295,36 +221,12 @@ class Score(commands.Cog):
 *Please try again once the correct permissions are set.*"""
             )
         else:
-            capture_exception(error)
             await ctx.send(
                 "**An uncaught leaderboard error has occurred.**\n" +
                 "*Please log this message in #support in the support server below, or try again.*\n" +
                 "**Error:** " + str(error)
             )
-            await ctx.send("https://discord.gg/fXxYyDJ")
-            raise error
-
-    @missed.error
-    async def missed_error(self, ctx, error):
-        logger.info("missed error")
-        if isinstance(error, commands.BadArgument):
-            await ctx.send('Not an integer!')
-        elif isinstance(error, commands.CommandOnCooldown):  # send cooldown
-            await ctx.send("**Cooldown.** Try again after " + str(round(error.retry_after)) + " s.", delete_after=5.0)
-        elif isinstance(error, commands.BotMissingPermissions):
-            await ctx.send(
-                "**The bot does not have enough permissions to fully function.**\n" +
-                f"**Permissions Missing:** `{', '.join(map(str, error.missing_perms))}`\n" +
-                "*Please try again once the correct permissions are set.*"
-            )
-        else:
-            capture_exception(error)
-            await ctx.send(
-                "**An uncaught missed birds error has occurred.**\n"
-                "*Please log this message in #support in the support server below, or try again.*\n"
-                "**Error:** " + str(error)
-            )
-            await ctx.send("https://discord.gg/fXxYyDJ")
+            await ctx.send(config.SUPPORT_SERVER)
             raise error
 
 

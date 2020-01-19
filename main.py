@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     # Here we load our extensions(cogs) that are located in the cogs directory, each cog is a collection of commands
     initial_extensions = [
-        'cogs.media', 'cogs.check', 'cogs.skip', 'cogs.hint'
+        'cogs.media', 'cogs.check', 'cogs.skip', 'cogs.hint', 'cogs.score'
     ]
     for extension in initial_extensions:
         try:
@@ -146,7 +146,7 @@ if __name__ == '__main__':
                     "**An uncaught generic error has occurred.**\n" +
                     "*Please log this message in #support in the support server below, or try again.*\n" +
                     "**Error:** " + str(error))
-                await ctx.send("https://discord.gg/fXxYyDJ")
+                await ctx.send(config.SUPPORT_SERVER)
                 raise error
 
         elif isinstance(error, commands.CommandInvokeError):
@@ -157,7 +157,7 @@ if __name__ == '__main__':
                         "**An unexpected ResponseError has occurred.**\n"
                         "*Please log this message in #support in the support server below, or try again.*\n"
                         "**Error:** " + str(error))
-                    await ctx.send("https://discord.gg/fXxYyDJ")
+                    await ctx.send(config.SUPPORT_SERVER)
                 else:
                     await channel_setup(ctx)
                     await ctx.send("Please run that command again.")
@@ -181,7 +181,7 @@ if __name__ == '__main__':
                         "**An unexpected HTTPException has occurred.**\n" +
                         "*Please log this message in #support in the support server below, or try again*\n" +
                         "**Error:** " + str(error.original))
-                    await ctx.send("https://discord.gg/fXxYyDJ")
+                    await ctx.send(config.SUPPORT_SERVER)
 
 #            elif isinstance(error.original, aiohttp.ClientOSError):
 #                if error.original.errno == errno.ECONNRESET:
@@ -192,7 +192,7 @@ if __name__ == '__main__':
 #                        "**An unexpected ClientOSError has occurred.**\n" +
 #                        "*Please log this message in #support in the support server below, or try again.*\n" +
 #                        "**Error:** " + str(error.original))
-#                    await ctx.send("https://discord.gg/fXxYyDJ")
+#                    await ctx.send(config.SUPPORT_SERVER)
 
             else:
                 logger.info("uncaught command error")
@@ -201,7 +201,7 @@ if __name__ == '__main__':
                     "**An uncaught command error has occurred.**\n" +
                     "*Please log this message in #support in the support server below, or try again.*\n" +
                     "**Error:**  " + str(error))
-                await ctx.send("https://discord.gg/fXxYyDJ")
+                await ctx.send(config.SUPPORT_SERVER)
                 raise error
 
         else:
@@ -210,7 +210,7 @@ if __name__ == '__main__':
             await ctx.send("**An uncaught non-command error has occurred.**\n" +
                            "*Please log this message in #support in the support server below, or try again.*\n" +
                            "**Error:** " + str(error))
-            await ctx.send("https://discord.gg/fXxYyDJ")
+            await ctx.send(config.SUPPORT_SERVER)
             raise error
 
 
