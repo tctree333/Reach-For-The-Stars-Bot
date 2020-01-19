@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     # Here we load our extensions(cogs) that are located in the cogs directory, each cog is a collection of commands
     initial_extensions = [
-        'cogs.media', 'cogs.check', 'cogs.skip', 'cogs.hint', 'cogs.score'
+        'cogs.media', 'cogs.check', 'cogs.skip', 'cogs.hint', 'cogs.score', 'cogs.other'
     ]
     for extension in initial_extensions:
         try:
