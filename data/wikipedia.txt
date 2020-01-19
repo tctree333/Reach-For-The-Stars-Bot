@@ -40,7 +40,7 @@ baby boom galaxy,https://en.wikipedia.org/wiki/Baby_Boom_Galaxy
 ngc6357,https://en.wikipedia.org/wiki/NGC_6357
 ngc6334,https://en.wikipedia.org/wiki/NGC_6334
 t tauri,https://en.wikipedia.org/wiki/T_Tauri_star
-smc,hhttps://en.wikipedia.org/wiki/Small_Magellanic_Cloud
+smc,https://en.wikipedia.org/wiki/Small_Magellanic_Cloud
 gn-z11,https://en.wikipedia.org/wiki/GN-z11
 m101,https://en.wikipedia.org/wiki/Pinwheel_Galaxy
 m60,https://en.wikipedia.org/wiki/Messier_60
