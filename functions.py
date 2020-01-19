@@ -28,7 +28,6 @@ from io import BytesIO
 from mimetypes import guess_all_extensions, guess_extension
 
 import discord
-from PIL import Image
 
 from data import (GenericError, database, logger)
 async def channel_setup(ctx):
