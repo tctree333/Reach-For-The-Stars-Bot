@@ -185,6 +185,18 @@ def get_alias(item):
     return alias
 
 
+def get_item_type(item: str):
+    item = item.lower()
+    if item in constellations:
+        return "constellations"
+    elif item in dsos:
+        return "dsos"
+    elif item in stars:
+        return "stars"
+    else:
+        return None
+
+
 def _lists():
     """Converts txt files of data into lists."""
     filenames = ("constellations", "dsos", "stars")

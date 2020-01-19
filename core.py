@@ -7,7 +7,7 @@ import discord
 from git import Repo
 
 import config
-from data import GenericError, logger, database
+from data import GenericError, logger, database, get_item_type
 
 # Valid file types
 valid_image_extensions = {"jpg", "png", "jpeg", "gif"}
@@ -112,8 +112,8 @@ async def get_files(item, retries=0):
     """
     logger.info(f"get_files retries: {retries}")
     item = str(item).lower()
-    types = ["constellations", "dsos", "stars"]
-    directory = f"github_download/{random.choice(types)}/{item}/"
+    space_thing = get_item_type(item)
+    directory = f"github_download/{space_thing}/{item}/"
     try:
         logger.info("trying")
         files_dir = os.listdir(directory)
@@ -132,11 +132,14 @@ async def get_files(item, retries=0):
 
 
 async def download_github():
-    logger.info("cloning github")
+    logger.info("syncing github")
     try:
-        logger.info("deleting existing images")
-        shutil.rmtree("github_download/")
+        os.listdir("github_download/")
     except FileNotFoundError:
         logger.info("doesn't exist, cloning")
-    Repo.clone_from(config.GITHUB_IMAGE_REPO_URL, "github_download/")
-    logger.info("done cloning")
+        Repo.clone_from(config.GITHUB_IMAGE_REPO_URL, "github_download/")
+        logger.info("done cloning")
+    else:
+        logger.info("exists, pulling")
+        Repo("github_download/").remote("origin").pull()
+        logger.info("done pulling")
