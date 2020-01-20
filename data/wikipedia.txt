@@ -1,4 +1,4 @@
-andromeda,https://en.wikipedia.org/wiki/Andromeda_Galaxy
+andromeda,https://en.wikipedia.org/wiki/Andromeda_(constellation)
 aquila,https://en.wikipedia.org/wiki/Aquila_(constellation)
 auriga,https://en.wikipedia.org/wiki/Auriga_(constellation)
 bootes,https://en.wikipedia.org/wiki/Bo%C3%B6tes
