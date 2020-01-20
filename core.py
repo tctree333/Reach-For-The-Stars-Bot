@@ -1,16 +1,19 @@
+import asyncio
 import base64
+import concurrent.futures
 import os
 import random
 import shutil
-import discord
 
+import discord
 from git import Repo
 
 import config
-from data import GenericError, logger, database, get_item_type
+from data import GenericError, database, get_item_type, logger
 
 # Valid file types
 valid_image_extensions = {"jpg", "png", "jpeg", "gif"}
+
 
 async def send_image(ctx, item: str, on_error=None, message=None):
     """Gets a picture and sends it to the user.
@@ -22,7 +25,9 @@ async def send_image(ctx, item: str, on_error=None, message=None):
     """
     if item == "":
         logger.error(f"error - {config.ID_TYPE} is blank")
-        await ctx.send(f"**There was an error fetching {config.ID_TYPE}.**\n*Please try again.*")
+        await ctx.send(
+            f"**There was an error fetching {config.ID_TYPE}.**\n*Please try again.*"
+        )
         if on_error is not None:
             on_error(ctx)
         return
@@ -35,7 +40,9 @@ async def send_image(ctx, item: str, on_error=None, message=None):
         response = await get_image(ctx, item)
     except GenericError as e:
         await delete.delete()
-        await ctx.send(f"**An error has occurred while fetching images.**\n*Please try again.*\n**Reason:** {str(e)}")
+        await ctx.send(
+            f"**An error has occurred while fetching images.**\n*Please try again.*\n**Reason:** {str(e)}"
+        )
         logger.exception(e)
         if on_error is not None:
             on_error(ctx)
@@ -56,6 +63,7 @@ async def send_image(ctx, item: str, on_error=None, message=None):
         file_obj = discord.File(filename, filename=f"image.{extension}")
         await ctx.send(file=file_obj)
         await delete.delete()
+
 
 async def get_image(ctx, item):
     """Chooses an image from a list of images.
@@ -82,11 +90,14 @@ async def get_image(ctx, item):
         for x in range(0, len(images)):  # check file type and size
             y = (x + j) % len(images)
             image_link = images[y]
-            extension = image_link.split('.')[-1]
+            extension = image_link.split(".")[-1]
             logger.info("extension: " + str(extension))
             statInfo = os.stat(image_link)
             logger.info("size: " + str(statInfo.st_size))
-            if extension.lower() in valid_image_extensions and statInfo.st_size < 4000000:  # keep files less than 4mb
+            if (
+                extension.lower() in valid_image_extensions
+                and statInfo.st_size < 4000000  # keep files less than 4mb
+            ):
                 logger.info("found one!")
                 break
             elif y == prevJ:
@@ -133,13 +144,23 @@ async def get_files(item, retries=0):
 
 async def download_github():
     logger.info("syncing github")
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=3)
+    loop = asyncio.get_event_loop()
     try:
         os.listdir("github_download/")
     except FileNotFoundError:
         logger.info("doesn't exist, cloning")
-        Repo.clone_from(config.GITHUB_IMAGE_REPO_URL, "github_download/")
+        await loop.run_in_executor(executor, _clone)
         logger.info("done cloning")
     else:
         logger.info("exists, pulling")
-        Repo("github_download/").remote("origin").pull()
+        await loop.run_in_executor(executor, _pull)
         logger.info("done pulling")
+
+
+def _clone():
+    Repo.clone_from(config.GITHUB_IMAGE_REPO_URL, "github_download/")
+
+
+def _pull():
+    Repo("github_download/").remote("origin").pull()
