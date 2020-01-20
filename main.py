@@ -30,13 +30,16 @@ from sentry_sdk import capture_exception, configure_scope
 
 from data import GenericError, database, logger
 from functions import channel_setup
+from core import download_github
 import config
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Initialize bot
-    bot = commands.Bot(command_prefix=config.PREFIXES,
-                       case_insensitive=True,
-                       description=config.BOT_DESCRIPTION)
+    bot = commands.Bot(
+        command_prefix=config.PREFIXES,
+        case_insensitive=True,
+        description=config.BOT_DESCRIPTION,
+    )
 
     @bot.event
     async def on_ready():
@@ -45,18 +48,29 @@ if __name__ == '__main__':
         logger.info(bot.user.name)
         logger.info(bot.user.id)
         # Change discord activity
-        await bot.change_presence(activity=discord.Activity(type=3, name=config.ID_TYPE))
+        await bot.change_presence(
+            activity=discord.Activity(type=3, name=config.ID_TYPE)
+        )
+
+        # start tasks
+        update_images.start()
 
     # Here we load our extensions(cogs) that are located in the cogs directory, each cog is a collection of commands
     initial_extensions = [
-        'cogs.media', 'cogs.check', 'cogs.skip', 'cogs.hint', 'cogs.score', 'cogs.other'
+        "cogs.media",
+        "cogs.check",
+        "cogs.skip",
+        "cogs.hint",
+        "cogs.score",
+        "cogs.other",
     ]
     for extension in initial_extensions:
         try:
             bot.load_extension(extension)
         except (discord.ClientException, ModuleNotFoundError):
-            logger.exception(f'Failed to load extension {extension}.')
-    if sys.platform == 'win32':
+            logger.exception(f"Failed to load extension {extension}.")
+
+    if sys.platform == "win32":
         asyncio.set_event_loop(asyncio.ProactorEventLoop())
 
     ######
@@ -82,7 +96,11 @@ if __name__ == '__main__':
             me = guild.me if guild is not None else ctx.bot.user
             permissions = ctx.channel.permissions_for(me)
 
-            missing = [perm for perm, value in perms.items() if getattr(permissions, perm, None) != value]
+            missing = [
+                perm
+                for perm, value in perms.items()
+                if getattr(permissions, perm, None) != value
+            ]
 
             if not missing:
                 return True
@@ -90,7 +108,6 @@ if __name__ == '__main__':
             raise commands.BotMissingPermissions(missing)
         else:
             return True
-
 
     ######
     # GLOBAL ERROR CHECKING
@@ -101,12 +118,16 @@ if __name__ == '__main__':
         logger.info("Error: " + str(error))
 
         # don't handle errors with local handlers
-        if hasattr(ctx.command, 'on_error'):
+        if hasattr(ctx.command, "on_error"):
             return
 
         if isinstance(error, commands.CommandOnCooldown):  # send cooldown
-            await ctx.send("**Cooldown.** Try again after " + str(round(error.retry_after)) + " s.",
-                           delete_after=5.0)
+            await ctx.send(
+                "**Cooldown.** Try again after "
+                + str(round(error.retry_after))
+                + " s.",
+                delete_after=5.0,
+            )
 
         elif isinstance(error, commands.CommandNotFound):
             capture_exception(error)
@@ -122,9 +143,11 @@ if __name__ == '__main__':
             await ctx.send("An invalid character was detected. Please try again.")
 
         elif isinstance(error, commands.BotMissingPermissions):
-            await ctx.send("**The bot does not have enough permissions to fully function.**\n" +
-                           f"**Permissions Missing:** `{', '.join(map(str, error.missing_perms))}`\n" +
-                           "*Please try again once the correct permissions are set.*")
+            await ctx.send(
+                "**The bot does not have enough permissions to fully function.**\n"
+                + f"**Permissions Missing:** `{', '.join(map(str, error.missing_perms))}`\n"
+                + "*Please try again once the correct permissions are set.*"
+            )
 
         elif isinstance(error, commands.NoPrivateMessage):
             capture_exception(error)
@@ -138,14 +161,18 @@ if __name__ == '__main__':
             elif error.code == 201:
                 logger.info("HTTP Error")
                 capture_exception(error)
-                await ctx.send("**An unexpected HTTP Error has occurred.**\n *Please try again.*")
+                await ctx.send(
+                    "**An unexpected HTTP Error has occurred.**\n *Please try again.*"
+                )
             else:
                 logger.info("uncaught generic error")
                 capture_exception(error)
                 await ctx.send(
-                    "**An uncaught generic error has occurred.**\n" +
-                    "*Please log this message in #support in the support server below, or try again.*\n" +
-                    "**Error:** " + str(error))
+                    "**An uncaught generic error has occurred.**\n"
+                    + "*Please log this message in #support in the support server below, or try again.*\n"
+                    + "**Error:** "
+                    + str(error)
+                )
                 await ctx.send(config.SUPPORT_SERVER)
                 raise error
 
@@ -155,8 +182,10 @@ if __name__ == '__main__':
                 if database.exists(f"channel:{str(ctx.channel.id)}"):
                     await ctx.send(
                         "**An unexpected ResponseError has occurred.**\n"
-                        "*Please log this message in #support in the support server below, or try again.*\n"
-                        "**Error:** " + str(error))
+                        + "*Please log this message in #support in the support server below, or try again.*\n"
+                        + "**Error:** "
+                        + str(error)
+                    )
                     await ctx.send(config.SUPPORT_SERVER)
                 else:
                     await channel_setup(ctx)
@@ -174,45 +203,60 @@ if __name__ == '__main__':
 
             elif isinstance(error.original, discord.HTTPException):
                 if error.original.status == 502:
-                    await ctx.send("**An error has occured with discord. :(**\n*Please try again.*")
+                    await ctx.send(
+                        "**An error has occured with discord. :(**\n*Please try again.*"
+                    )
                 else:
                     capture_exception(error.original)
                     await ctx.send(
-                        "**An unexpected HTTPException has occurred.**\n" +
-                        "*Please log this message in #support in the support server below, or try again*\n" +
-                        "**Error:** " + str(error.original))
+                        "**An unexpected HTTPException has occurred.**\n"
+                        + "*Please log this message in #support in the support server below, or try again*\n"
+                        + "**Error:** "
+                        + str(error.original)
+                    )
                     await ctx.send(config.SUPPORT_SERVER)
 
-#            elif isinstance(error.original, aiohttp.ClientOSError):
-#                if error.original.errno == errno.ECONNRESET:
-#                    await ctx.send("**An error has occured with discord. :(**\n*Please try again.*")
-#                else:
-#                    capture_exception(error.original)
-#                    await ctx.send(
-#                        "**An unexpected ClientOSError has occurred.**\n" +
-#                        "*Please log this message in #support in the support server below, or try again.*\n" +
-#                        "**Error:** " + str(error.original))
-#                    await ctx.send(config.SUPPORT_SERVER)
+            #            elif isinstance(error.original, aiohttp.ClientOSError):
+            #                if error.original.errno == errno.ECONNRESET:
+            #                    await ctx.send("**An error has occured with discord. :(**\n*Please try again.*")
+            #                else:
+            #                    capture_exception(error.original)
+            #                    await ctx.send(
+            #                        "**An unexpected ClientOSError has occurred.**\n" +
+            #                        "*Please log this message in #support in the support server below, or try again.*\n" +
+            #                        "**Error:** " + str(error.original))
+            #                    await ctx.send(config.SUPPORT_SERVER)
 
             else:
                 logger.info("uncaught command error")
                 capture_exception(error.original)
                 await ctx.send(
-                    "**An uncaught command error has occurred.**\n" +
-                    "*Please log this message in #support in the support server below, or try again.*\n" +
-                    "**Error:**  " + str(error))
+                    "**An uncaught command error has occurred.**\n"
+                    + "*Please log this message in #support in the support server below, or try again.*\n"
+                    + "**Error:**  "
+                    + str(error)
+                )
                 await ctx.send(config.SUPPORT_SERVER)
                 raise error
 
         else:
             logger.info("uncaught non-command")
             capture_exception(error)
-            await ctx.send("**An uncaught non-command error has occurred.**\n" +
-                           "*Please log this message in #support in the support server below, or try again.*\n" +
-                           "**Error:** " + str(error))
+            await ctx.send(
+                "**An uncaught non-command error has occurred.**\n"
+                + "*Please log this message in #support in the support server below, or try again.*\n"
+                + "**Error:** "
+                + str(error)
+            )
             await ctx.send(config.SUPPORT_SERVER)
             raise error
 
+    @tasks.loop(hours=24.0)
+    async def update_images():
+        """Updates the images."""
+        logger.info("updating github")
+        await download_github()
+        logger.info("done updating images!")
 
     # Actually run the bot
     token = os.getenv("token")
