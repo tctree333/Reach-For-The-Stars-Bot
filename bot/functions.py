@@ -14,23 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import asyncio
-import contextlib
 import difflib
 import math
 import os
-import pickle
-import random
-import string
-import time
-import urllib.parse
-from functools import partial
-from io import BytesIO
-from mimetypes import guess_all_extensions, guess_extension
 
 import discord
 
-from bot.data import GenericError, database, logger
+import bot.config as config
+from bot.data import GenericError, database, groups, id_list, logger
 
 
 async def channel_setup(ctx):
@@ -44,13 +35,13 @@ async def channel_setup(ctx):
     else:
         database.hmset(
             f"channel:{str(ctx.channel.id)}", {
-                "bird": "",
+                "item": "",
                 "answered": 1,
                 "prevJ": 20,
                 "prevB": ""
             }
         )
-        # true = 1, false = 0, index 0 is last arg, prevJ is 20 to define as integer
+        # true = 1, false = 0, prevJ is 20 to define as integer
         logger.info("channel data added")
         await ctx.send("Ok, setup! I'm all ready to use!")
 
@@ -79,12 +70,12 @@ async def user_setup(ctx):
 
 
 def error_skip(ctx):
-    """Skips the current bird.
+    """Skips the current item.
     
-    Passed to send_bird() as on_error to skip the bird when an error occurs to prevent error loops.
+    Passed to send_image() as on_error to skip the item when an error occurs to prevent error loops.
     """
     logger.info("ok")
-    database.hset(f"channel:{str(ctx.channel.id)}", "bird", "")
+    database.hset(f"channel:{str(ctx.channel.id)}", "item", "")
     database.hset(f"channel:{str(ctx.channel.id)}", "answered", "1")
 
 
@@ -98,6 +89,26 @@ def score_increment(ctx, amount: int):
     database.zincrby("score:global", amount, str(ctx.channel.id))
     database.zincrby("users:global", amount, str(ctx.author.id))
 
+def build_id_list(group_str: str = ""):
+    categories = group_str.split(" ")
+
+    id_choices = []
+    category_output = ""
+
+    if not config.ID_GROUPS:
+        return (id_list, "None")
+
+    for group in groups.keys():
+        for category in categories:
+            if category in config.CATEGORY_ALIASES[group] and group not in category_output.split(" "):
+                id_choices += groups[group]
+                category_output += f"{group} "
+
+    if not id_choices:
+        id_choices += id_list
+        category_output = "None"
+
+    return (id_choices, category_output.strip())
 
 def owner_check(ctx) -> bool:
     """Check to see if the user is the owner of the bot."""

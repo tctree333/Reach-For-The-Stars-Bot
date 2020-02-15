@@ -21,25 +21,22 @@ from discord.ext import commands
 
 import bot.config as config
 from bot.core import send_image
-from bot.data import database, id_list, logger, constellations, dsos, stars
-from bot.functions import channel_setup, error_skip, user_setup
+from bot.data import database, id_list, logger, groups
+from bot.functions import channel_setup, error_skip, user_setup, build_id_list
 
-ARG_MESSAGE = "**Recongnized arguments:** *Space Thing*: `{space_thing}`"
+ARG_MESSAGE = f"**Recongnized arguments:** *{config.CATEGORY_NAME}*: `"+"{category}`"
 
 IMAGE_MESSAGE = (
     f"*Here you go!* \n**Use `{config.PREFIXES[0]}pic` again to get a new image of the same {config.ID_TYPE}, " +
     f"or `{config.PREFIXES[0]}skip` to get a new {config.ID_TYPE}. Use `{config.PREFIXES[0]}check [guess]` to check your answer. " +
     f"Use `{config.PREFIXES[0]}hint` for a hint.**"
 )
-aliases = {"constellations": ["constellations", "constellation", "cst", "c"],
-           "dsos": ["dsos", "dso", "d"],
-           "stars": ["stars", "star", "s"]}
 
 class Media(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    async def send_pic_(self, ctx, space_thing):
+    async def send_pic_(self, ctx, args):
 
         logger.info(f"{config.ID_TYPE}: " + str(database.hget(f"channel:{str(ctx.channel.id)}", "item"))[2:-1])
 
@@ -47,20 +44,12 @@ class Media(commands.Cog):
         logger.info(f"answered: {answered}")
         # check to see if previous item was answered
         if answered:  # if yes, give a new item
-            space_thing = space_thing.lower()
-            choices = []
-            if space_thing in aliases["constellations"]:
-                choices += constellations
-                await ctx.send(ARG_MESSAGE.format(space_thing="Constellations"))
-            elif space_thing in aliases["dsos"]:
-                choices += dsos
-                await ctx.send(ARG_MESSAGE.format(space_thing="Deep Sky Object"))
-            elif space_thing in aliases["stars"]:
-                choices += stars
-                await ctx.send(ARG_MESSAGE.format(space_thing="Stars"))
+            if config.ID_GROUPS:
+                build = build_id_list(args)
+                choices = build[0]
+                await ctx.send(ARG_MESSAGE.format(category=build[1]))
             else:
-                choices += id_list
-                await ctx.send(ARG_MESSAGE.format(space_thing="None"))
+                choices = id_list
             currentItem = random.choice(choices)
             prevB = str(database.hget(f"channel:{str(ctx.channel.id)}", "prevI"))[2:-1]
             while currentItem == prevB:
@@ -84,14 +73,16 @@ class Media(commands.Cog):
     @commands.command(help='- Sends a random image for you to ID', aliases=["p"])
     # 5 second cooldown
     @commands.cooldown(1, 5.0, type=commands.BucketType.channel)
-    async def pic(self, ctx, space_thing=""):
+    async def pic(self, ctx, *, args_str: str = ""):
         logger.info("command: pic")
 
         await channel_setup(ctx)
         await user_setup(ctx)
 
-        
-        await self.send_pic_(ctx, space_thing)
+        if not config.ID_GROUPS:
+            args_str = ""
+
+        await self.send_pic_(ctx, args_str)
 
 
 def setup(bot):

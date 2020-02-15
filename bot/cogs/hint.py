@@ -34,7 +34,7 @@ class Hint(commands.Cog):
         await user_setup(ctx)
 
         currentItem = str(database.hget(f"channel:{str(ctx.channel.id)}", "item"))[2:-1]
-        if currentItem != "":  # check if there is bird
+        if currentItem != "":  # check if there is item
             await ctx.send(f"The first letter is {currentItem[0]}")
         else:
             await ctx.send("You need to ask for a image first!")

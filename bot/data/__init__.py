@@ -30,24 +30,20 @@ database = redis.Redis(host='localhost', port=6379, db=0)
 
 # Database Format Definitions
 
-# github:commit : sha
 
 # prevJ - makes sure it sends a diff image
-# prevB - makes sure it sends a diff bird (img)
-# prevS - makes sure it sends a diff bird (sounds)
-# prevK - makes sure it sends a diff sound
+# prevB - makes sure it sends a diff item (img)
 
 # server format = {
-# channel:channel_id : { "bird", "answered", "sBird", "sAnswered",
-#                     "goatsucker", "gsAnswered",
-#                     "prevJ", "prevB", "prevS", "prevK" }
+# channel:channel_id : { "item", "answered",
+#                     "prevJ", "prevB" }
 # }
 
 # session format:
 # session.data:user_id : {"start": 0, "stop": 0,
 #                         "correct": 0, "incorrect": 0, "total": 0,
 #                         "bw": bw, "state": state, "addon": addon}
-# session.incorrect:user_id : [bird name, # incorrect]
+# session.incorrect:user_id : [item name, # incorrect]
 
 # race format:
 # race.data:ctx.channel.id : { 
@@ -71,10 +67,10 @@ database = redis.Redis(host='localhost', port=6379, db=0)
 #    streak.max:global : [user id, max streak]
 # }
 
-# incorrect birds format = {
-#    incorrect:global : [bird name, # incorrect]
-#    incorrect.server:server_id : [bird name, # incorrect]
-#    incorrect.user:user_id: : [bird name, # incorrect]
+# incorrect item format = {
+#    incorrect:global : [item name, # incorrect]
+#    incorrect.server:server_id : [item name, # incorrect]
+#    incorrect.user:user_id: : [item name, # incorrect]
 # }
 
 # channel score format = {
@@ -166,7 +162,7 @@ def _generate_aliases():
     aliases = {}
     with open(f'bot/data/aliases.txt', 'r') as f:
         for line in f:
-            raw_aliases = list(line.strip().split(','))
+            raw_aliases = list(line.strip().lower().split(','))
             item = raw_aliases[0].lower()
             aliases[item] = raw_aliases
     logger.info("Done with aliases")
@@ -182,45 +178,68 @@ def get_aliases(item):
     return alias_list
 
 
-def get_item_type(item: str):
+def get_category(item: str):
     item = item.lower()
-    if item in constellations:
-        return "constellations"
-    elif item in dsos:
-        return "dsos"
-    elif item in stars:
-        return "stars"
-    else:
-        return None
+    for group in groups.keys():
+        if item in groups[group]:
+            return group.lower()
+    return None
 
 
-def _lists():
+def _groups():
     """Converts txt files of data into lists."""
-    filenames = ("constellations", "dsos", "stars")
+    filenames = [name.strip(".txt") for name in os.listdir("bot/data/lists/")]
     # Converts txt file of data into lists
-    lists = []
+    lists = {}
     for filename in filenames:
         logger.info(f"Working on {filename}")
-        with open(f'bot/data/{filename}.txt', 'r') as f:
-            lists.append([line.strip().lower() for line in f])
+        with open(f'bot/data/lists/{filename}.txt', 'r') as f:
+            lists[filename] = [line.strip().lower() for line in f]
         logger.info(f"Done with {filename}")
     logger.info("Done with lists!")
     return lists
 
 def _all_lists():
     """Compiles lists into master lists."""
-    lists = (constellations, dsos, stars)
     master = []
-    for data in lists:
-        for item in data:
+    for group in groups.keys():
+        for item in groups[group]:
             master.append(item)
     return master
 
+def _config():
+    logger.info("Reading configuration file")
+    logger.info("Validating configuration file")
+    test_var = (
+        config.AUTHORS,
+        config.CATEGORY_ALIASES,
+        config.ID_TYPE,
+        config.PREFIXES,
+        config.BOT_DESCRIPTION,
+        config.GITHUB_IMAGE_REPO_URL,
+        config.INVITE,
+        config.SUPPORT_SERVER,
+        config.BOT_SIGNATURE,
+        config.ID_GROUPS,
+        config.NAME,
+        config.SOURCE_LINK,
+        config.CATEGORY_NAME
+    )
+    test_var = None
+    logger.info("Done valiating configuration file")
 
-constellations, dsos, stars = _lists() # pylint: disable=unbalanced-tuple-unpacking
+    for group in groups.keys():
+        if group not in config.CATEGORY_ALIASES.keys():
+            config.CATEGORY_ALIASES[group] = [group]
+            logger.info(f"Added {group} to aliases")
+
+    logger.info("Done reading configuration file!")
+
+groups = _groups()
 id_list = _all_lists()
 wikipedia_urls = _wiki_urls()
 aliases = _generate_aliases()
+_config()
 logger.info(
     f"List Lengths: {len(id_list)}")
 

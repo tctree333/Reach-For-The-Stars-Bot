@@ -23,8 +23,8 @@ import wikipedia
 from discord.ext import commands
 
 import bot.config as config
-from bot.data import database, get_aliases, id_list, logger
-from bot.functions import channel_setup, owner_check, user_setup
+from bot.data import database, get_aliases, id_list, logger, aliases
+from bot.functions import channel_setup, owner_check, user_setup, build_id_list
 from bot.core import send_image
 
 class Other(commands.Cog):
@@ -40,12 +40,21 @@ class Other(commands.Cog):
         await channel_setup(ctx)
         await user_setup(ctx)
 
+        close_aliases = []
+
+        for alias in aliases.keys():
+            matches = get_close_matches(arg.lower(), aliases[alias], n=1)
+            if matches:
+                close_aliases.append(matches[0])
+        alias_match = get_close_matches(arg.lower(), close_aliases, n=1)
+        arg = [name for name, alias in aliases.items() if alias_match[0] in aliases[name]][0]
+
         matches = get_close_matches(arg, id_list, n=1)
         if matches:
             item = matches[0]
 
             delete = await ctx.send("Please wait a moment.")
-            await send_image(ctx, str(item), message="Here's the image!")
+            await send_image(ctx, str(item), message=f"Here's a *{item.lower()}* image!")
             await delete.delete()
 
         else:
@@ -54,15 +63,19 @@ class Other(commands.Cog):
     # List command
     @commands.command(help="- DMs the user with the appropriate list.", name="list")
     @commands.cooldown(1, 8.0, type=commands.BucketType.user)
-    async def list_of_items(self, ctx):
+    async def list_of_items(self, ctx, group = ""):
         logger.info("command: list")
 
         await channel_setup(ctx)
         await user_setup(ctx)
 
+        build = build_id_list(group)
+        group_list = build[0]
+        detected_groups = "total items" if build[1] == "None" else build[1]
+
         item_lists = []
         temp = ""
-        for item in id_list:
+        for item in group_list:
             temp += f"{str(item)}\n"
             if len(temp) > 1950:
                 item_lists.append(temp)
@@ -72,13 +85,13 @@ class Other(commands.Cog):
         if ctx.author.dm_channel is None:
             await ctx.author.create_dm()
 
-        await ctx.author.dm_channel.send(f"**The national {config.ID_TYPE} list:**")
+        await ctx.author.dm_channel.send(f"**{detected_groups.capitalize()} in the National {config.ID_TYPE} list:**")
         for group in item_lists:
             await ctx.author.dm_channel.send(f"```{group}```")
 
         await ctx.send(
-            f"The national {config.ID_TYPE} list has **{str(len(id_list))}** {config.ID_TYPE}.\n" +
-            f"*A full list of {config.ID_TYPE} has been sent to you via DMs.*"
+            f"The national {config.ID_TYPE} list has **{str(len(group_list))}** {detected_groups}.\n" +
+            f"*A full list of {detected_groups} has been sent to you via DMs.*"
         )
 
 
@@ -116,7 +129,8 @@ class Other(commands.Cog):
         embed.add_field(
             name="Bot Info",
             value=f"This bot was created by {config.AUTHORS}" +
-            f" for helping people practice {config.ID_TYPE} identification for Science Olympiad.\n",
+            f" for helping people practice {config.ID_TYPE} identification for Science Olympiad.\n" +
+            f"The bot's source can be found here: {config.SOURCE_LINK}",
             inline=False
         )
         embed.add_field(

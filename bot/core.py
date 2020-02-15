@@ -25,7 +25,7 @@ import discord
 from git import Repo
 
 import bot.config as config
-from bot.data import GenericError, database, get_item_type, logger
+from bot.data import GenericError, database, get_category, logger
 
 # Valid file types
 valid_image_extensions = {"jpg", "png", "jpeg", "gif"}
@@ -90,8 +90,7 @@ async def get_image(ctx, item):
     Returns a list containing the file path and extension type.
 
     `ctx` - Discord context object\n
-    `bird` (str) - bird to get image of\n
-    `addOn` (str) - string to append to search for female/juvenile birds\n
+    `item` (str) - item to get image of\n
     """
 
     images = await get_files(item)
@@ -133,14 +132,13 @@ async def get_files(item, retries=0):
     looking for files in the cache for media and
     downloading images to the cache if not found.
 
-    `sciBird` (str) - scientific name of bird\n
-    `media_type` (str) - type of media (images/songs)\n
-    `addOn` (str) - string to append to search for female/juvenile birds\n
+    `item` (str) - item to get image of\n
+    `retries` (int) - number of attempts completed\n
     """
     logger.info(f"get_files retries: {retries}")
     item = str(item).lower()
-    space_thing = get_item_type(item)
-    directory = f"github_download/{space_thing}/{item}/"
+    category = get_category(item)
+    directory = f"github_download/{category}/{item}/"
     try:
         logger.info("trying")
         files_dir = os.listdir(directory)
@@ -152,10 +150,13 @@ async def get_files(item, retries=0):
         # if not found, fetch images
         logger.info("fetching files")
         logger.info("item: " + str(item))
-        await download_github()
-        retries += 1
-        filenames = await get_files(item, retries)
-        return filenames
+        if retries < 3:
+            await download_github()
+            retries += 1
+            return await get_files(item, retries)
+        else:
+            logger.info("More than 3 retries")
+            return []
 
 
 async def download_github():
