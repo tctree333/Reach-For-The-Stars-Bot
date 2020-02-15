@@ -164,7 +164,7 @@ def get_wiki_url(item):
 def _generate_aliases():
     logger.info("Working on aliases")
     aliases = {}
-    with open(f'bot/data/dsos.txt', 'r') as f:
+    with open(f'bot/data/aliases.txt', 'r') as f:
         for line in f:
             raw_aliases = list(line.strip().split(','))
             item = raw_aliases[0].lower()
@@ -202,7 +202,7 @@ def _lists():
     for filename in filenames:
         logger.info(f"Working on {filename}")
         with open(f'bot/data/{filename}.txt', 'r') as f:
-            lists.append([line.strip().split(",")[0].lower() for line in f])
+            lists.append([line.strip().lower() for line in f])
         logger.info(f"Done with {filename}")
     logger.info("Done with lists!")
     return lists
