@@ -22,10 +22,10 @@ import discord
 import wikipedia
 from discord.ext import commands
 
-import config
-from data import database, get_aliases, id_list, logger
-from functions import channel_setup, owner_check, user_setup
-from core import send_image
+import bot.config as config
+from bot.data import database, get_aliases, id_list, logger
+from bot.functions import channel_setup, owner_check, user_setup
+from bot.core import send_image
 
 class Other(commands.Cog):
     def __init__(self, bot):

@@ -19,10 +19,10 @@ import random
 
 from discord.ext import commands
 
-import config
-from core import send_image
-from data import database, id_list, logger, constellations, dsos, stars
-from functions import channel_setup, error_skip, user_setup
+import bot.config as config
+from bot.core import send_image
+from bot.data import database, id_list, logger, constellations, dsos, stars
+from bot.functions import channel_setup, error_skip, user_setup
 
 ARG_MESSAGE = "**Recongnized arguments:** *Space Thing*: `{space_thing}`"
 

@@ -22,7 +22,7 @@ import sys
 import redis
 from discord.ext import commands
 
-import config
+import bot.config as config
 
 # define database for one connection
 database = redis.Redis(host='localhost', port=6379, db=0)
@@ -147,7 +147,7 @@ class GenericError(commands.CommandError):
 def _wiki_urls():
     logger.info("Working on wiki urls")
     urls = {}
-    with open(f'data/wikipedia.txt', 'r') as f:
+    with open(f'bot/data/wikipedia.txt', 'r') as f:
         for line in f:
             item = line.strip().split(',')[0].lower()
             url = line.strip().split(',')[1]
@@ -164,7 +164,7 @@ def get_wiki_url(item):
 def _generate_aliases():
     logger.info("Working on aliases")
     aliases = {}
-    with open(f'data/dsos.txt', 'r') as f:
+    with open(f'bot/data/dsos.txt', 'r') as f:
         for line in f:
             raw_aliases = list(line.strip().split(','))
             item = raw_aliases[0].lower()
@@ -201,7 +201,7 @@ def _lists():
     lists = []
     for filename in filenames:
         logger.info(f"Working on {filename}")
-        with open(f'data/{filename}.txt', 'r') as f:
+        with open(f'bot/data/{filename}.txt', 'r') as f:
             lists.append([line.strip().split(",")[0].lower() for line in f])
         logger.info(f"Done with {filename}")
     logger.info("Done with lists!")

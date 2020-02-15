@@ -28,10 +28,10 @@ import wikipedia
 from discord.ext import commands, tasks
 from sentry_sdk import capture_exception, configure_scope
 
-from data import GenericError, database, logger
-from functions import channel_setup
-from core import download_github
-import config
+from bot.data import GenericError, database, logger
+from bot.functions import channel_setup
+from bot.core import download_github
+import bot.config as config
 
 if __name__ == "__main__":
     # Initialize bot
@@ -57,12 +57,12 @@ if __name__ == "__main__":
 
     # Here we load our extensions(cogs) that are located in the cogs directory, each cog is a collection of commands
     initial_extensions = [
-        "cogs.media",
-        "cogs.check",
-        "cogs.skip",
-        "cogs.hint",
-        "cogs.score",
-        "cogs.other",
+        "bot.cogs.media",
+        "bot.cogs.check",
+        "bot.cogs.skip",
+        "bot.cogs.hint",
+        "bot.cogs.score",
+        "bot.cogs.other",
     ]
     for extension in initial_extensions:
         try:

@@ -19,9 +19,9 @@ import typing
 import discord
 from discord.ext import commands
 
-import config
-from data import database, logger
-from functions import channel_setup, user_setup
+import bot.config as config
+from bot.data import database, logger
+from bot.functions import channel_setup, user_setup
 
 
 class Score(commands.Cog):

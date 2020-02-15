@@ -17,12 +17,12 @@
 import asyncio
 import contextlib
 import difflib
+import math
 import os
 import pickle
 import random
 import string
 import time
-import math
 import urllib.parse
 from functools import partial
 from io import BytesIO
@@ -30,7 +30,9 @@ from mimetypes import guess_all_extensions, guess_extension
 
 import discord
 
-from data import (GenericError, database, logger)
+from bot.data import GenericError, database, logger
+
+
 async def channel_setup(ctx):
     """Sets up a new discord channel.
     

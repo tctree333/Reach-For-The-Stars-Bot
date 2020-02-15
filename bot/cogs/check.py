@@ -17,8 +17,8 @@
 import discord
 from discord.ext import commands
 
-from data import database, get_wiki_url, logger, get_aliases
-from functions import channel_setup, score_increment, spellcheck_list, user_setup
+from bot.data import database, get_wiki_url, logger, get_aliases
+from bot.functions import channel_setup, score_increment, spellcheck_list, user_setup
 
 
 class Check(commands.Cog):

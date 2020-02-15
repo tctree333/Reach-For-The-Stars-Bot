@@ -1,3 +1,19 @@
+# core.py | functions for getting media from a GitHub repo
+# Copyright (C) 2019-2020  EraserBird, person_v1.32, hmmm
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import asyncio
 import base64
 import concurrent.futures
@@ -8,8 +24,8 @@ import shutil
 import discord
 from git import Repo
 
-import config
-from data import GenericError, database, get_item_type, logger
+import bot.config as config
+from bot.data import GenericError, database, get_item_type, logger
 
 # Valid file types
 valid_image_extensions = {"jpg", "png", "jpeg", "gif"}
