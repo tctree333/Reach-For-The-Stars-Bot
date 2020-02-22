@@ -3,4 +3,4 @@ redis==3.4.1
 Pillow==7.0.0
 sentry-sdk==0.14.1
 wikipedia==1.4.0
-gitpython==3.0.5
+gitpython==3.0.8
