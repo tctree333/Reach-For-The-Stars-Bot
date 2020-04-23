@@ -1,5 +1,4 @@
 import sciolyid as bot
-import credentials
 
 bot.setup(
     bot_description = "Star ID - A SciOly Discord Bot for aspiring astronomers",
@@ -14,6 +13,9 @@ bot.setup(
     wikipedia_file = "wikipedia.txt",
     alias_file = "aliases.txt",
 
+    backups_channel = 703001356591693835,
+    local_redis = False,
+
     logs = True,
     log_dir = "logs",
     file_folder = "bot_files",
@@ -24,7 +26,6 @@ bot.setup(
     authors = "person_v1.32, with code from hmmm and EraserBird, and with help from Naddle and whaledemon",
     source_link = "https://github.com/tctree333/Reach-For-The-Stars-Bot",
 
-    secrets = credentials.credentials,
     id_groups = True,
     category_name = "Space Thing",
     category_aliases = {"constellations": ["constellations", "constellation", "cst", "c"],
