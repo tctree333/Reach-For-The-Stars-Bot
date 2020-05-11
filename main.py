@@ -18,7 +18,7 @@ bot.setup(
 
     logs = True,
     log_dir = "logs",
-    file_folder = "bot_files",
+    bot_files_dir = "bot_files",
     data_dir = "data",
 
     invite = "This bot is currently not avaliable outside the support server.",
