@@ -4,7 +4,7 @@ bot.setup(
     bot_description = "Star ID - A SciOly Discord Bot for aspiring astronomers",
     bot_signature = "Star ID - An Astronomy Bot",
     prefixes = ["s!", "s.", "s*", "S!", "S.", "S*"],
-    id_type = "star",
+    id_type = "stars",
     short_id_type = "st",
     name = "star-id",
 
