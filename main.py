@@ -15,6 +15,7 @@ bot.setup(
 
     backups_channel = 703001356591693835,
     local_redis = False,
+    sentry=True,
 
     logs = True,
     log_dir = "logs",
