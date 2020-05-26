@@ -5,7 +5,6 @@ bot.setup(
     bot_signature = "Star ID - An Astronomy Bot",
     prefixes = ["s!", "s.", "s*", "S!", "S.", "S*"],
     id_type = "stars",
-    short_id_type = "st",
     name = "star-id",
 
     github_image_repo_url = "https://github.com/tctree333/Reach-For-The-Stars-Images.git",
