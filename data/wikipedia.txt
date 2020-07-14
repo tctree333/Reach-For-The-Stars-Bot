@@ -6,16 +6,16 @@ canis major,https://en.wikipedia.org/wiki/Canis_Major
 canis minor,https://en.wikipedia.org/wiki/Canis_Minor
 centaurus,https://en.wikipedia.org/wiki/Centaurus
 coma berenices,https://en.wikipedia.org/wiki/Coma_Berenices
-corvus,https://en.wikipedia.org/wiki/Corvus
+corvus,https://en.wikipedia.org/wiki/Corvus_(constellation)
 crux,https://en.wikipedia.org/wiki/Crux
-cygnus,https://en.wikipedia.org/wiki/Swan
+cygnus,https://en.wikipedia.org/wiki/Cygnus_(constellation)
 dorado,https://en.wikipedia.org/wiki/Dorado
 gemini,https://en.wikipedia.org/wiki/Gemini_(constellation)
 lyra,https://en.wikipedia.org/wiki/Lyra
 ophiuchus,https://en.wikipedia.org/wiki/Ophiuchus
 orion,https://en.wikipedia.org/wiki/Orion_(constellation)
 perseus,https://en.wikipedia.org/wiki/Perseus_(constellation)
-sagittarius,https://en.wikipedia.org/wiki/Sagittarius_A*
+sagittarius,https://en.wikipedia.org/wiki/Sagittarius_(constellation)
 sextans,https://en.wikipedia.org/wiki/Sextans
 scorpius,https://en.wikipedia.org/wiki/Scorpius
 taurus,https://en.wikipedia.org/wiki/Taurus_(constellation)
