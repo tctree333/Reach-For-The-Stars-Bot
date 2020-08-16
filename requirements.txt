@@ -1,1 +1,1 @@
-sciolyid==0.4.8
+sciolyid[web]==0.5.0-alpha

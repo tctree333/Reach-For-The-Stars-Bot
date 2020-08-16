@@ -1,37 +1,5 @@
 import sciolyid as bot
+from config import config
 
-bot.setup(
-    bot_description = "Star ID - A SciOly Discord Bot for aspiring astronomers",
-    bot_signature = "Star ID - An Astronomy Bot",
-    prefixes = ["s!", "s.", "s*", "S!", "S.", "S*"],
-    id_type = "stars",
-    name = "star-id",
-
-    github_image_repo_url = "https://github.com/tctree333/Reach-For-The-Stars-Images.git",
-    list_dir = "lists",
-    wikipedia_file = "wikipedia.txt",
-    alias_file = "aliases.txt",
-
-    backups_channel = 703001356591693835,
-    local_redis = False,
-    sentry=True,
-
-    logs = True,
-    log_dir = "logs",
-    bot_files_dir = "bot_files",
-    data_dir = "data",
-
-    invite = "This bot is currently not avaliable outside the support server.",
-    support_server = "https://discord.gg/Y2xwJSh",
-    authors = "person_v1.32, with code from hmmm and EraserBird, and with help from Naddle and whaledemon",
-    source_link = "https://github.com/tctree333/Reach-For-The-Stars-Bot",
-
-    id_groups = True,
-    category_name = "Space Thing",
-    category_aliases = {"constellations": ["constellations", "constellation", "cst", "c"],
-    "dsos": ["dsos", "dso", "d"],
-    "stars": ["stars", "star", "s"]},
-
-)
-
+bot.setup(config)
 bot.start()
