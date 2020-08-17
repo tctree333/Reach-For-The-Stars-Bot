@@ -26,5 +26,8 @@ config = {
         "constellations": ["constellations", "constellation", "cst", "c"],
         "dsos": ["dsos", "dso", "d"],
         "stars": ["stars", "star", "s"],
-    }
+    },
+    "local_redis": False,
+    "sentry": True,
+    "backups_channel": 703001356591693835,
 }
