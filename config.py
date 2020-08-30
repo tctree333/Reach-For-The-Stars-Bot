@@ -13,7 +13,6 @@ config = {
     "base_image_url": "https://raw.githubusercontent.com/tctree333/Reach-For-The-Stars-Images/master/",
     "validation_repo_url": "https://github.com/person-v132/SciOlyID-Images.git",
     "validation_repo_dir": "rfts",
-    "discord_webhook_url": "https://discordapp.com/api/webhooks/744699521010761858/AZZhOTQxrgFBo5aQOtV_3J5F-hi2Hp20BDdbIl2YNorI-0PUmRKdM-lvxUmBwowmJge1",
 
     "name": "star-id",
     "logs": True,
