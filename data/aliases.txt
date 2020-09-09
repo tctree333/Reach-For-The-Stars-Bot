@@ -21,3 +21,5 @@ GN-z11
 M101,Pinwheel Galaxy,Messier 101
 M60,Messier 60,NGC4649
 M104,Sombrero Galaxy,Messier 104
+Ursa Major,Big Dipper
+Ursa Minor,Little Dipper
