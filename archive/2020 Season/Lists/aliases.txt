@@ -1,5 +1,4 @@
 M31,Andromeda Galaxy,Messier 31
-DLA0817g,Wolfe Disk
 NGC5128,Centaurus A
 NGC4676,Mice Galaxies
 NGC4555

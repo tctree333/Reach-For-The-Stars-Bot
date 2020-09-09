@@ -2,7 +2,6 @@ andromeda,https://en.wikipedia.org/wiki/Andromeda_(constellation)
 aquila,https://en.wikipedia.org/wiki/Aquila_(constellation)
 auriga,https://en.wikipedia.org/wiki/Auriga_(constellation)
 bootes,https://en.wikipedia.org/wiki/Bo%C3%B6tes
-cancer,https://en.wikipedia.org/wiki/Cancer_(constellation)
 canis major,https://en.wikipedia.org/wiki/Canis_Major
 canis minor,https://en.wikipedia.org/wiki/Canis_Minor
 centaurus,https://en.wikipedia.org/wiki/Centaurus
@@ -25,7 +24,6 @@ ursa major,https://en.wikipedia.org/wiki/Ursa_Major
 ursa minor,https://en.wikipedia.org/wiki/Ursa_Minor
 virgo,https://en.wikipedia.org/wiki/Virgo_(constellation)
 m31,https://en.wikipedia.org/wiki/Andromeda_Galaxy
-dla0817g,https://en.wikipedia.org/wiki/DLA0817g
 ngc5128,https://en.wikipedia.org/wiki/Centaurus_A
 ngc4676,https://en.wikipedia.org/wiki/Mice_Galaxies
 ngc4555,https://en.wikipedia.org/wiki/NGC_4555

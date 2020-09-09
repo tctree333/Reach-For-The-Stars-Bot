@@ -2,7 +2,6 @@ Andromeda
 Aquila
 Auriga
 Bootes
-Cancer
 Canis Major
 Canis Minor
 Centaurus
