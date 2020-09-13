@@ -14,3 +14,5 @@ GW151226
 M87
 3C 273
 DLA0817g
+Chandra Isotropic Universe Survey
+Hubble CANDELS Survey
