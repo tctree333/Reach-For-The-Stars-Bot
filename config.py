@@ -16,6 +16,7 @@ config = {
 
     "name": "star-id",
     "logs": True,
+    "restricted_list_dir": "restricted/",
     "bot_files_dir": "bot_files/",
     "short_id_type": "s",
     "invite": "This bot is currently not avaliable outside the support server.",
