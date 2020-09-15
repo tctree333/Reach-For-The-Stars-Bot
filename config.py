@@ -19,7 +19,7 @@ config = {
     "restricted_list_dir": "restricted/",
     "bot_files_dir": "bot_files/",
     "short_id_type": "s",
-    "invite": "This bot is currently not avaliable outside the support server.",
+    "invite": "https://discord.com/oauth2/authorize?client_id=666825281389985803&permissions=268486656&scope=bot\nPlease note that this bot may be used for testing.",
     "authors": "person_v1.32, with code from hmmm and EraserBird, and with help from Naddle and whaledemon",
     "id_groups": True,
     "category_aliases": {
