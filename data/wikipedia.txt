@@ -66,3 +66,20 @@ mizar,https://en.wikipedia.org/wiki/Mizar
 alcor,https://en.wikipedia.org/wiki/Alcor_(star)
 polaris,https://en.wikipedia.org/wiki/Polaris
 spica,https://en.wikipedia.org/wiki/Spica
+sn uds10wil,https://en.wikipedia.org/wiki/SN_UDS10Wil
+ngc 2623,https://en.wikipedia.org/wiki/NGC_2623
+grb 150101b,https://en.wikipedia.org/wiki/GRB_150101B
+jkcs 041,https://en.wikipedia.org/wiki/JKCS_041
+macs j0717.5+3745,https://en.wikipedia.org/wiki/MACS_J0717.5%2B3745
+macs j1149.5+2223,https://frontierfields.org/2014/02/25/meet-the-frontier-fields-macs-j1149-52223/
+bullet cluster (1e 0657-56),https://en.wikipedia.org/wiki/Bullet_Cluster
+h1821+643,https://en.wikipedia.org/wiki/H1821%2B643
+goods-s 29323,https://en.wikipedia.org/wiki/Great_Observatories_Origins_Deep_Survey#Instruments
+h2356-309,https://en.wikipedia.org/wiki/H2356-309
+pss 0133+0400,https://chandra.harvard.edu/photo/2019/dark/
+pss 0955+5940,https://www.space.com/43166-dark-energy-increasing-time-quasars.html
+gw151226,https://en.wikipedia.org/wiki/GW151226
+m87,https://en.wikipedia.org/wiki/Messier_87
+3c 273,https://en.wikipedia.org/wiki/3C_273
+chandra isotropic universe survey,https://chandra.harvard.edu/photo/2020/isotropic/
+hubble candels survey,https://en.wikipedia.org/wiki/Cosmic_Assembly_Near-infrared_Deep_Extragalactic_Legacy_Survey
