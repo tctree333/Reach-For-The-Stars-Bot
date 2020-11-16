@@ -6,6 +6,7 @@ config = {
     "github_image_repo_url": "https://github.com/tctree333/Reach-For-The-Stars-Images.git",
     "support_server": "https://discord.gg/Y2xwJSh",
     "source_link": "https://github.com/tctree333/Reach-For-The-Stars-Bot",
+    "members_intent": True,
 
     "category_name": "Space Thing",
 
