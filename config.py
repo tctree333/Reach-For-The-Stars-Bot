@@ -20,8 +20,11 @@ config = {
     "restricted_list_dir": "restricted/",
     "bot_files_dir": "bot_files/",
     "short_id_type": "s",
-    "invite": "https://discord.com/oauth2/authorize?client_id=666825281389985803&permissions=268486656&scope=bot\nPlease note that this bot may be used for testing.",
-    "authors": "person_v1.32, with code from hmmm and EraserBird, and with help from Naddle and whaledemon",
+    "invite": "https://discord.com/oauth2/authorize?client_id=666825281389985803&permissions=268486656&scope=bot" +
+              "\n\nPlease note that this bot, while fully featured, is not officially supported. Image quality " +
+              "has not been checked, and many items are missing images. In addition, this bot may be used for " +
+              "testing purposes and we make no guarantee that the bot will be in working condition.",
+    "authors": "person_v1.32, with code from hmmm and EraserBird, and with help from Naddle and WhaleDemon",
     "id_groups": True,
     "category_aliases": {
         "constellations": ["constellations", "constellation", "cst", "c"],
@@ -30,5 +33,5 @@ config = {
     },
     "local_redis": False,
     "sentry": True,
-    "backups_channel": 703001356591693835,
+    "backups_channel": None, # 703001356591693835,
 }
