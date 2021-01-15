@@ -21,6 +21,6 @@ Sextans
 Scorpius
 Taurus
 Tucana
-Ursa Major
-Ursa Minor
+Ursa Major,Big Dipper
+Ursa Minor,Little Dipper
 Virgo
