@@ -9,6 +9,7 @@ config = {
     "members_intent": True,
 
     "category_name": "Space Thing",
+    "default_state_list": "RFTS",
 
     "client_id": 666825281389985803,
     "base_image_url": "https://raw.githubusercontent.com/tctree333/Reach-For-The-Stars-Images/master/",
