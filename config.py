@@ -31,5 +31,5 @@ config = {
     },
     "local_redis": False,
     "sentry": True,
-    "backups_channel": 703001356591693835,
+    "backups_channel": None,
 }
